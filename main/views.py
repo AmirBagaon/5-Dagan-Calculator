@@ -4,5 +4,5 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'main/home2.html')
 
-def home(request):
+def first(request):
     return render(request, 'main/first.html')
