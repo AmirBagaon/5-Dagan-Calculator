@@ -18,8 +18,9 @@
 				<div id="ps_location" class="row ps_location">
 					{% for person in persons %}
         <div class="col-45 card">
-          <div class="card-container"> 
-            <h1>{{ person.name }}</h1>
+          <div class="card-container">
+            <h2><a href="{% url 'person_details' person.name %}" class="link-info">{{ person.name }}</a></h2>
+            
             <p><span class="expense each_ps_price">₪ {{0}}</span><span class="card-item-name"><a href="#" class="current_buy_location">:קנייה נוכחית</a></span></p>
             <div class="card_owed_content"><br>
             	{% for purchase in person.getOwedFrom %}

@@ -14,9 +14,6 @@ def addstr(arg1, arg2):
 @register.filter
 def getattribute(value, arg):
     """Gets an attribute of an object dynamically from a string name"""
-    print("@@@@@@@@@@@@@")
-    print(f"val: {value}, arg: {arg}")
-    print("@@@@@@@@@@@@@")
     if arg in value:
         return value[arg]
         

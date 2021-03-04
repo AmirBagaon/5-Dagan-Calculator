@@ -3,12 +3,26 @@
 {% block content %}
 
 <style>
-    .table-rtl * {
+    .side-rtl * {
         direction: rtl;
     }
+    .my_container {
+    /* transform: rotate(0deg); */
+    background-color: #ccf;
+    padding: 5px 20px 15px 20px;
+    /* border: 1px solid lightgrey; */
+    border-radius: 3px;
+  }
 </style>
 
-<table class="table table-striped table-rtl">
+<br>
+<div class="my_container">
+    <div id="outer-circle"></div>
+<div class="side-rtl">
+<h2>הסטוריית קניות</h2>
+</div>
+
+<table class="table table-striped side-rtl">
     <thead>
         <tr>
             <th scope="col">תאריך</th>
@@ -33,5 +47,6 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 
 {% endblock %}

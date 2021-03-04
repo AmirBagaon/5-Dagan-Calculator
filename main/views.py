@@ -73,6 +73,8 @@ def home(request):
 
     return render(request, "main/home.html")
 
+def base_page(request):
+    return render(request, "main/base.html")
 
 def person_create_view(request):
     form = PersonForm(request.POST or None)

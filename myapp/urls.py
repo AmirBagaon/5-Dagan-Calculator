@@ -25,6 +25,7 @@ urlpatterns = [
     path('debts_details', main_views.debts_details, name="debts_details"),
     path('person_details/<str:p_name>/', main_views.dynamic_lookup_view, name='person_details'),
     path('person_create', main_views.person_create_view, name="person_create"),
+    path('base_page', main_views.base_page, name="base_page"),
     
     
     

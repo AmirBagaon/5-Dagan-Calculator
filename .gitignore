@@ -5,3 +5,4 @@ __pycache__/
 */migrations/0*.py
 */migrations/0*.pyc
 db.sqlite3
+secrets.py

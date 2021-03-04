@@ -8,15 +8,21 @@
     }
 
     .with-eight {
-    text-shadow:
     color: white;
     font-size: 20px;
-    text-shadow:
+    /* text-shadow:
         0.07em 0 black,
         0 0.07em black,
         -0.07em 0 black,
-        0 -0.07em black;
+        0 -0.07em black; */
 }
+.my_container {
+    /* transform: rotate(0deg); */
+    background-color: #cfc;
+    padding: 5px 20px 15px 20px;
+    /* border: 1px solid lightgrey; */
+    border-radius: 3px;
+  }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -87,7 +93,9 @@
     }
     </script>
 
-
+<br>
+<div class="my_container">
+  <div id="outer-circle"></div>
 <div class="content-rtl">
 <h2>פירוט חובות</h2>
   <input class="form-control" id="myInput" type="text" dir="rtl" placeholder="כאן ניתן לכתוב את שם המוצר, שם הקונה או כל דבר אחר כדי לחפש בטבלה">
@@ -119,5 +127,5 @@
         {% endfor %}
     </tbody>
 </table>
-
+</div>
 {% endblock %}

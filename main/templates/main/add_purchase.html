@@ -1,5 +1,42 @@
 {% extends "main/base.html" %}
 
+{% block css_block %}
+
+<style>
+  body {
+    margin: 20px auto;
+    font-family: 'Lato';
+    /* background: #fff; */
+    /* color: #fff; */
+  }
+
+  .my_container {
+    /* transform: rotate(0deg); */
+    background-color: #cfc;
+    padding: 5px 20px 15px 20px;
+    /* border: 1px solid lightgrey; */
+    border-radius: 3px;
+  }
+
+  #outer-circle {
+    background: #385a94;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    position: relative;
+    box-shadow: 0 0 0 3px black;
+    margin: 10px;
+    background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, yellow 50%, black 100%);
+    background-image: -webkit-radial-gradient(45px 45px, circle cover, yellow, black);
+    background-image: radial-gradient(yellow 50%, black 100%);
+    /* display: block; */
+    margin-left: auto;
+    margin-right: auto;
+    /* width: 50%; */
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 <!-- 
 <div class="container-ms">
@@ -27,83 +64,91 @@
 </div> -->
 
 <style>
-  .form-horizontal * {
+  .right_side * {
     direction: rtl;
   }
 </style>
-<form class="form-horizontal" role="form" action="{% url 'add_purchase' %}  " method="POST">
-  {% csrf_token %}
-  <div class="form-group">
-    <label for="product_name"><b>שם המוצר</b></label>
-    <input type="text" class="form-control" id="product_name" name="product_name" placeholder="לדוגמה: מתנה ל..."
-    {% if data %} value={{data.product_name}} {% endif %}>
-    <!-- Present line in case of an error -->
-    {% if product_name_error %}
-    <div class="alert alert-danger" role="alert">
-      {{product_name_error}}
-    </div>
-    {% endif %}
+<br>
+<div class="my_container">
+  <div id="outer-circle">
+  </div>
+  <div class="right_side">
+    <h2>הוספת מוצר</h2>
   </div>
   <br>
-  <div class="form-group">
-    <label for="priceInput"><b>מחיר</b></label>
-    <input type="number" step="any" class="form-control" id="product_price" name="product_price"
-      placeholder="לדוגמה: 5 או 9.90" {% if data %} value={{data.product_price}} {% endif %}>
-    <!-- Present line in case of an error -->
-    {% if product_price_error %}
-    <div class="alert alert-danger" role="alert">
-      {{product_price_error}}
+  <form class="right_side" role="form" action="{% url 'add_purchase' %}  " method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="product_name"><b>שם המוצר</b></label>
+      <input type="text" class="form-control" id="product_name" name="product_name" placeholder="לדוגמה: מתנה ל..."
+      {% if data %} value={{data.product_name}} {% endif %}>
+      <!-- Present line in case of an error -->
+      {% if product_name_error %}
+      <div class="alert alert-danger" role="alert">
+        {{product_name_error}}
+      </div>
+      {% endif %}
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="priceInput"><b>מחיר</b></label>
+      <input type="number" step="any" class="form-control" id="product_price" name="product_price"
+        placeholder="לדוגמה: 5 או 9.90" {% if data %} value={{data.product_price}} {% endif %}>
+      <!-- Present line in case of an error -->
+      {% if product_price_error %}
+      <div class="alert alert-danger" role="alert">
+        {{product_price_error}}
+      </div>
+      {% endif %}
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="productDate"><b>תאריך</b></label>
+      <input type="date" class="form-control" id="product_date" name="product_date" {% if data %}
+        value={{data.product_date}} {% else %} value={{current_day}} {% endif %}>
+      {% if product_date_error %}
+      <div class="alert alert-danger" role="alert">
+        {{product_date_error}}
+      </div>
+      {% endif %}
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="product_buyers"><b>מי קנתה?</b></label> <small id="emailHelp" class="form-text text-muted"> ניתן לבחור
+        בכמה אפשרויות ע"י החזקת המקש ctrl </small>
+      <select multiple class="form-control" id="product_buyers" name="product_buyers">
+        {% for person in persons %}
+        <option value={{ person }}>{{ person }}</option>
+        {% endfor %}
+      </select>
+      {% if product_buyers_error %}
+      <div class="alert alert-danger" role="alert">
+        {{product_buyers_error}}
+      </div>
+      {% endif %}
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="product_debtors"><b>מי צריכה להחזיר? </b></label><small id="emailHelp" class="form-text text-muted">
+        ניתן לבחור בכמה אפשרויות ע"י החזקת המקש ctrl </small>
+      <select multiple class="form-control" id="product_debtors" name="product_debtors">
+        {% for person in persons %}
+        <option value={{ person }}>{{ person }}</option>
+        {% endfor %}
+      </select>
+      {% if product_debtors_error %}
+      <div class="alert alert-danger" role="alert">
+        {{product_debtors_error}}
+      </div>
+      {% endif %}
+    </div>
+    <br>
+    {% if success_message %}
+    <div class="alert alert-success" role="alert">
+      {{success_message}}
     </div>
     {% endif %}
-  </div>
-  <br>
-  <div class="form-group">
-    <label for="productDate"><b>תאריך</b></label>
-    <input type="date" class="form-control" id="product_date" name="product_date" {% if data %}
-      value={{data.product_date}} {% else %} value={{current_day}} {% endif %}>
-    {% if product_date_error %}
-    <div class="alert alert-danger" role="alert">
-      {{product_date_error}}
-    </div>
-    {% endif %}
-  </div>
-  <br>
-  <div class="form-group">
-    <label for="product_buyers"><b>מי קנתה?</b></label> <small id="emailHelp" class="form-text text-muted"> ניתן לבחור
-      בכמה אפשרויות ע"י החזקת המקש ctrl </small>
-    <select multiple class="form-control" id="product_buyers" name="product_buyers">
-      {% for person in persons %}
-      <option value={{ person }}>{{ person }}</option>
-      {% endfor %}
-    </select>
-    {% if product_buyers_error %}
-    <div class="alert alert-danger" role="alert">
-      {{product_buyers_error}}
-    </div>
-    {% endif %}
-  </div>
-  <br>
-  <div class="form-group">
-    <label for="product_debtors"><b>מי צריכה להחזיר? </b></label><small id="emailHelp" class="form-text text-muted">
-      ניתן לבחור בכמה אפשרויות ע"י החזקת המקש ctrl </small>
-    <select multiple class="form-control" id="product_debtors" name="product_debtors">
-      {% for person in persons %}
-      <option value={{ person }}>{{ person }}</option>
-      {% endfor %}
-    </select>
-    {% if product_debtors_error %}
-    <div class="alert alert-danger" role="alert">
-      {{product_debtors_error}}
-    </div>
-    {% endif %}
-  </div>
-  <br>
-  {% if success_message %}
-  <div class="alert alert-success" role="alert">
-    {{success_message}}
-  </div>
-  {% endif %}
-  <button type="submit" class="btn btn-primary">הוספה</button>
-</form>
-
+    <button type="submit" class="btn btn-primary">הוספה</button>
+  </form>
+</div>
 {% endblock %}
