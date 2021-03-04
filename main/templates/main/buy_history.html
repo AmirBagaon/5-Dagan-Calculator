@@ -1,0 +1,37 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<style>
+    .table-rtl * {
+        direction: rtl;
+    }
+</style>
+
+<table class="table table-striped table-rtl">
+    <thead>
+        <tr>
+            <th scope="col">תאריך</th>
+            <th scope="col">מי צריכה להחזיר?</th>
+            <th scope="col">מי שילמה?</th>
+            <th scope="col">מחיר</th>
+            <th scope="col">שם המוצר</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in purchases %}
+        <tr>
+            <td>{{p.date}}</td>
+            <td>{{p.getDebtorsNames}}</td>
+            <td>{{p.getBuyersNames}}</td>
+            <td>{{p.price}}</td>
+            <td>{{p.item_name}}</td>
+            <th scope="row">{{ forloop.counter0 }}</th>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

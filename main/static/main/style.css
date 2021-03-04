@@ -1,0 +1,369 @@
+/* <!-- my changes --> */
+
+.col-5 {
+	-ms-flex: 5%;
+	/* IE10 */
+	flex: 5%;
+}
+
+.col-10 {
+	-ms-flex: 10%;
+	/* IE10 */
+	flex: 10%;
+}
+
+.col-20 {
+	-ms-flex: 20%;
+	/* IE10 */
+	flex: 20%;
+}
+
+.col-33 {
+	-ms-flex: 33%;
+	/* IE10 */
+	flex: 33%;
+}
+
+.col-40 {
+	-ms-flex: 40%;
+	/* IE10 */
+	flex: 33%;
+}
+
+.col-45 {
+	-ms-flex: 25%;
+	/* IE10 */
+	flex: 25%;
+	margin: 5%;
+}
+
+
+/* <!-- until here --> */
+
+body {
+	font-family: Arial;
+	font-size: 17px;
+	padding: 8px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.row {
+	display: -ms-flexbox;
+	/* IE10 */
+	display: flex;
+	-ms-flex-wrap: wrap;
+	/* IE10 */
+	flex-wrap: wrap;
+	margin: 0 -16px;
+}
+
+.col-25 {
+	-ms-flex: 25%;
+	/* IE10 */
+	flex: 25%;
+}
+
+.col-50 {
+	-ms-flex: 50%;
+	/* IE10 */
+	flex: 50%;
+}
+
+.col-75 {
+	-ms-flex: 75%;
+	/* IE10 */
+	flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+	padding: 0 16px;
+}
+
+.container {
+	background-color: #f2f2f2;
+	padding: 5px 20px 15px 20px;
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+}
+
+label {
+	margin-bottom: 10px;
+	display: block;
+}
+
+.icon-container {
+	margin-bottom: 20px;
+	padding: 7px 0;
+	font-size: 24px;
+}
+
+.btn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 12px;
+	margin: 10px 0;
+	border: none;
+	width: 100%;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 17px;
+}
+
+.btn:hover {
+	background-color: #45a049;
+}
+
+a {
+	color: #2196F3;
+}
+
+hr {
+	border: 1px solid lightgrey;
+}
+
+span.right {
+	float: right;
+}
+
+span.price {
+	float: right;
+	color: grey;
+}
+
+span.prices {
+	float: right;
+	color: grey;
+}
+
+span.cart-item {
+	float: right;
+	color: grey;
+}
+
+span.cart-price {
+	color: grey;
+}
+
+noBorders_table {
+	border-collapse: collapse;
+}
+
+input:focus::placeholder {
+	color: transparent;
+}
+
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+
+@media (max-width: 800px) {
+	.row {
+		flex-direction: column-reverse;
+	}
+	.col-25 {
+		margin-bottom: 20px;
+	}
+}
+
+.dropdown-check-list {
+	display: inline-block;
+}
+
+.dropdown-check-list .anchor {
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	padding: 5px 50px 5px 10px;
+	border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+	position: absolute;
+	content: "";
+	border-left: 2px solid black;
+	border-top: 2px solid black;
+	padding: 5px;
+	right: 10px;
+	top: 20%;
+	-moz-transform: rotate(-135deg);
+	-ms-transform: rotate(-135deg);
+	-o-transform: rotate(-135deg);
+	-webkit-transform: rotate(-135deg);
+	transform: rotate(-135deg);
+}
+
+.dropdown-check-list .anchor:active:after {
+	right: 8px;
+	top: 21%;
+}
+
+.dropdown-check-list ul.participants {
+	padding: 2px;
+	display: none;
+	margin: 0;
+	border: 1px solid #ccc;
+	border-top: none;
+}
+
+.dropdown-check-list ul.participants li {
+	list-style: none;
+}
+
+.close {
+	cursor: pointer;
+	padding: 2px 3px;
+}
+
+.close:hover {
+	background: #bbb;
+}
+
+.clickable {
+	cursor: pointer;
+	padding: 2px 3px;
+}
+
+.clickable:hover {
+	background: #bbb;
+}
+
+
+/* Style the counter cards */
+
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	padding: 16px;
+	text-align: center;
+	background-color: #f1f1f1;
+	background-image: linear-gradient(150deg, #FFEFBA, #FFFFFF 100%);
+	background-clip: padding-box;
+	/*The frame */
+	position: relative;
+}
+
+.flip-card {
+	background-color: transparent;
+	width: 300px;
+	height: 300px;
+	perspective: 1000px;
+	position: relative;
+}
+
+.flip-card-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	transition: transform 0.8s;
+	transform-style: preserve-3d;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+	transform: rotateX(360deg);
+	/* -webkit-filter: brightness(150%); */
+}
+
+.card-container {
+	background-color: #f1f1f1;
+	background-image: linear-gradient(150deg, #FFEFBA, #FFFFFF 100%);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	background-clip: padding-box;
+	/*The frame */
+	padding: 5px 20px 15px 20px;
+	transition: transform 0.8s;
+	position: relative;
+	-webkit-transform: perspective(1px) translateZ(0);
+	transform: perspective(1px) translateZ(0);
+	/* box-shadow: 0 0 1px rgba(0, 0, 0, 0); */
+	-webkit-transition-duration: 0.5s;
+	transition-duration: 0.5s;
+}
+
+.card-container:hover {
+	transform: scale(1.09);
+	-webkit-transform: scale(1.08);
+	transform: scale(1.08);
+	-webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+	transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+
+.flip-card-front,
+.flip-card-back {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	background: linear-gradient(150deg, #9CECFB, #a1d6f0, #9CECFB 100%);
+	background: linear-gradient(150deg, #FFEFBA, #FFFFFF 100%);
+}
+
+.flip-card-front {
+	background-color: #bbb;
+	color: black;
+}
+
+.flip-card-back {
+	background: linear-gradient(150deg, #9CECFB, #65C7F7, #3a7ff0 100%);
+	/* background-color: rgb(243, 208, 131); */
+	color: black;
+	transform: rotateY(180deg);
+}
+
+.expense {
+	color: red;
+	float: left;
+	padding-left: 3%;
+}
+
+.income {
+	color: green;
+	float: left;
+	padding-left: 3%;
+}
+
+.top_10 {
+	padding-top: 3%;
+	padding-bottom: 3%;
+}
+
+.top_3 {
+	padding-top: 3%;
+	padding-bottom: 3%;
+}
+
+.top_0 {
+	padding-top: 3%;
+	padding-bottom: 3%;
+}
+
+.card-item-name {
+	float: right;
+	padding-right: 3%;
+}
+
+.add_chkbox {
+	width: 50%;
+}
+
+.calcs-table,
+.summary-table {
+	font-family: arial, sans-serif;
+	text-align: right;
+	padding: 3x;
+	/* border-collapse: collapse; */
+	width: 75%;
+	/* display:table-row-group; */
+}
+
+td.calcs-table,
+th.calcs-table {
+	border: 1px solid #e20a0a;
+	text-align: right;
+	padding: 8px;
+}

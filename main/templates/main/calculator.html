@@ -1,0 +1,180 @@
+    {% extends "main/base.html" %}
+    {% load static %}
+    {% block css_block %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    
+    {% endblock %}
+{% block content %}
+
+    <center>
+    <h1>וְנֶחְשַׁב לָכֶם תְּרוּמַתְכֶם כַּדָּגָן</h1>
+    <p>מערכת החישובים המשפחתית של משפחת דגן</p>
+    </center>
+    <div class="row">
+      <div class="col-75">
+				<!-- <div class="container"> -->
+				<div id="ps_location" class="row ps_location">
+					{% for person in persons %}
+        <div class="col-45 card">
+          <div class="card-container"> 
+            <h1>{{ person.name }}</h1>
+            <p><span class="expense each_ps_price">₪ {{0}}</span><span class="card-item-name"><a href="#" class="current_buy_location">:קנייה נוכחית</a></span></p>
+            <div class="card_owed_content"><br>
+            	{% for purchase in person.getOwedFrom %}
+          <p><span class="income">₪ {{purchase.price}}</span><span class="card-item-name"><a href="#"> 
+            {% for d in purchase.getDebtors %} ({{d}}) {% endfor %} {{purchase.item_name}}</a></span></p>
+          <br>
+          {% endfor %}
+            </div>
+            <br>
+            <div class="card_calcs_content"></div>
+            <div class="total_for_ps top_10">
+            <hr>
+            <p><span class="income total_amount">₪ {{person.getTotalOwed}}</span><span class="card-item-name"><b>סה"כ</b></span></p>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+				</div>
+				<!-- </div> -->
+			</div>
+      <div class="col-25">
+        <div class="container">
+          <h3>
+            <center>רשימת הקניות</center>
+					</h3>
+          <div class="cart-items">
+            <h4><i class="fa fa-shopping-cart"></i> <b id = "total_items">0</b> <span class="prices" style="color:black">מוצרים</span></h4>
+            <!-- <p><a href="#">Product 1</a> <span class="price">$15</span></p> -->
+            <!-- <p><a href="#">Product 2</a> <span class="price">$5</span></p> -->
+            <!-- <p><a href="#">Product 3</a> <span class="price">$8</span></p> -->
+            <!-- <p><a href="#">Product 4</a> <span class="price">$2</span></p> -->
+					</div>
+          <hr>
+          <p><b>₪<span id = "total_price">0</span></b><span class="prices" style="color:black"><b>סה"כ</b></span></p>
+          <!-- <button id="a" onclick="displayTable()">הוספת פריט</button> -->
+          <div id="add_items_button" class="dropdown-check-list" tabindex="100">
+						<span class="anchor" onclick="displayTable()">הוספת פריט</span>
+          </div>
+          <br>
+          <div class="bottomLine" id ="bottom_line" style = "display : none;">
+            <table class="noBorders_table">
+              <tr>
+                <td><input type='text' dir="rtl" placeholder="שם המוצר" id="itemName"/></td>
+                <td>:תיאור/שם</td>
+							</tr>
+              <tr>
+                <td><input dir="rtl" type='text' placeholder="לדוגמה: 0 או 9.90" id="itemPrice"/></td>
+                <td>:מחיר</td>
+							</tr>
+							<tr>
+								<td>
+									<button id="add_item_btn" onclick="addElement(document.getElementById('itemName').value, document.getElementById('itemPrice').value)">!הוספה</button>
+								</td>
+							</tr>
+						</table>
+            <div style="color:red;" id="error_item_div"></div>
+					</div> <!-- end of bottomLine -->
+				</div> <!-- end of container -->
+        	
+				<br>
+				<!-- Who participate part -->
+				<div class="container">
+				<div id="list1" class="dropdown-check-list" tabindex="100">
+						<span class="anchor" id="ps_anchor">?מי המשתתפים</span>
+						<ul id="participants" class="participants">
+							<li class="participant"><input type="checkbox" class="p_chkbox" onclick=participantsChanged() checked />טל</li>
+							<li class="participant"><input type="checkbox" class="p_chkbox" onclick=participantsChanged() checked />אפרת</li>
+							<li class="participant"><input type="checkbox" class="p_chkbox" onclick=participantsChanged() checked />עידית</li>
+							<li class="participant"><input type="checkbox" class="p_chkbox" onclick=participantsChanged() checked />שרי</li>
+							<li class="participant"><input type="checkbox" class="p_chkbox" onclick=participantsChanged() />ישי</li>
+              <li id="add_ps_list_item"><input type="text" class="add_chkbox" id="add_chkbox" placeholder="הוספה..." dir="rtl" onclick=participantsChanged() /><span class="clickable" id="ps_adding" onclick="participantAdd()">&#10004; </span></li>
+						</ul>
+					</div>
+          <br>
+          <p><b>₪<span id = "each_ps_price">0</span></b><span class="prices" style="color:black"><b>:סה"כ לכל אחד</b></span></p>
+          <div style="color:red;" id="error_ps_add_div"></div>
+
+          <br>
+          <p><select id="already_paid" onclick="participantsChanged()"><option value="לא שולם">לא שולם</option>
+          </select><span class="prices" style="color:black"><b>?מי שילם</b></span></p>
+        </div> <!-- end of container -->
+
+        <br>
+				<!-- Special Calculations part -->
+				<div class="container">
+          <div id="more_calcs_button" class="dropdown-check-list" tabindex="100">
+						<span class="anchor" onclick="displaySpecialCalcs()">:לחישובים נוספים</span>
+          </div>
+          <br>
+          <div id ="special_calcs_line" style = "display : none;">
+            <p><span class="prices" style="color:black"><b>:מי חייב למי</b></span></p>
+            <br>
+
+            <table class="noBorders_table">
+              <tr>
+                <td><select id="ps_duty"></select></td>
+                <td>:לחובת</td>
+							</tr>
+              <tr>
+                <td><select id="ps_credit"></select></td>
+                <td>:לזכות</td>
+							</tr>
+              <tr>
+                <td><input dir="rtl" type='text' placeholder="לדוגמה: 0 או 9.90" id="duty_amount"/></td>
+                <td>?כמה</td>
+							</tr>
+              <tr>
+                <td><input dir="rtl" type='text' placeholder="רשות. לדוגמה: עיפרון" id="duty_description"/></td>
+                <td>?על מה</td>
+							</tr>
+							<tr>
+								<td>
+									<button id="add_duty_btn" onclick="addDutyClick()">!הוספה</button>
+								</td>
+							</tr>
+						</table>
+            <div style="color:red;" id="error_duty_div"></div>
+            <div>
+              <br>
+              <table id = "calcs_table" class="calcs-table">
+                <tr>
+                  <th>כמה</th>
+                  <th>תיאור</th>
+                  <th>למי</th>
+                  <th>מי</th>
+                  <th></th>
+                </tr>
+              </table> 
+            </div>
+            </div>
+				</div> <!-- end of container -->
+        <br>
+				<!-- Special Calculations part -->
+				<div class="container">
+          <div id="summary_button" class="dropdown-check-list" tabindex="100">
+						<span class="anchor" onclick="displaySummary();optimizeCalcs()">סיכום חישובים</span>
+          </div>
+          <br>
+          <div id ="summary_line" style = "display : none;">
+            <!-- <button onclick="optimizeCalcs()">סיכום חישובים</button> -->
+            <br>
+            <table id = "summary_table" class="summary-table">
+              <thead>
+                <tr>
+                  <th>כמה</th>
+                  <th>למי</th>
+                  <th>מי</th>
+                </tr>  
+              </thead>
+              <tbody id="summary_tbody">
+              </tbody>
+            </table> 
+          </div>
+        </div> <!-- end of container -->
+			</div> <!-- end of 25 -->      
+		</div> <!-- end of row -->
+    <!-- <script src="{% static 'main/myscripts.js' %}"></script> -->
+        {% endblock %}					 

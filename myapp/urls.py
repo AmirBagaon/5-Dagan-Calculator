@@ -1,4 +1,4 @@
-"""calculator URL Configuration
+"""myapp URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -16,9 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main import views as main_views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', main_views.home, name='home'),
-    path('first/', main_views.first, name='first')
+    path('', main_views.home, name="home"),
+    path('add_purchase', main_views.add_purchase, name="add_purchase"),
+    path('calculator', main_views.calculator, name="calculator"),
+    path('buy_history', main_views.buy_history, name="buy_history"),
+    path('debts_details', main_views.debts_details, name="debts_details"),
+    path('person_details/<str:p_name>/', main_views.dynamic_lookup_view, name='person_details'),
+    path('person_create', main_views.person_create_view, name="person_create"),
+    
+    
+    
 ]
