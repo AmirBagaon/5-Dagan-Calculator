@@ -25,7 +25,7 @@ SECRET_KEY = 'e)p3!&k1+mar%zps%ih0&cupc1l)ixkm#+i6kn#v7xt!ko#nr_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["5dagancalculator.pythonanywhere.com", "127.0.0.1"]
 
 
 # Application definition
