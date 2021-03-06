@@ -2,6 +2,165 @@
 
 {% block content %}
 
-<h1>{{current.name}} </h1>
+<style>
+    .content-rtl * {
+        direction: rtl;
+        
+    }
+    .content-font * {
+      direction: rtl;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    table {
+    border-collapse: collapse;
+}
 
+td {
+    position: relative;
+    padding: 5px 10px;
+}
+
+tr.strikeout td:before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    border-bottom: 1px solid #111;
+    width: 100%;
+}
+}
+
+
+    .with-eight {
+    color: white;
+    font-size: 20px;
+    /* text-shadow:
+        0.07em 0 black,
+        0 0.07em black,
+        -0.07em 0 black,
+        0 -0.07em black; */
+}
+.my_container {
+    /* transform: rotate(0deg); */
+    background-color: #cfc;
+    padding: 5px 20px 15px 20px;
+    /* border: 1px solid lightgrey; */
+    border-radius: 3px;
+  }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#debt_table_body tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+</script>
+<script>
+    function sortTable(n) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("debt_table");
+      switching = true;
+      //Set the sorting direction to ascending:
+      dir = "asc"; 
+      /*Make a loop that will continue until
+      no switching has been done:*/
+      while (switching) {
+        //start by saying: no switching is done:
+        switching = false;
+        rows = table.rows;
+        /*Loop through all table rows (except the
+        first, which contains table headers):*/
+        for (i = 1; i < (rows.length - 1); i++) {
+          //start by saying there should be no switching:
+          shouldSwitch = false;
+          /*Get the two elements you want to compare,
+          one from current row and one from the next:*/
+          x = rows[i].getElementsByTagName("TD")[n];
+          y = rows[i + 1].getElementsByTagName("TD")[n];
+          /*check if the two rows should switch place,
+          based on the direction, asc or desc:*/
+          if (dir == "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              //if so, mark as a switch and break the loop:
+              shouldSwitch= true;
+              break;
+            }
+          } else if (dir == "desc") {
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              //if so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+        if (shouldSwitch) {
+          /*If a switch has been marked, make the switch
+          and mark that a switch has been done:*/
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          //Each time a switch is done, increase this count by 1:
+          switchcount ++;      
+        } else {
+          /*If no switching has been done AND the direction is "asc",
+          set the direction to "desc" and run the while loop again.*/
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
+        }
+      }
+    }
+    </script>
+
+<br>
+<div class="my_container">
+  <div id="outer-circle"></div>
+  <div class="content-rtl">
+    <h1>{{current_person.name}} </h1>
+  </div>
+<div class="content-font">
+  <input class="form-control" id="myInput" type="text" dir="rtl" placeholder="כאן ניתן לכתוב את שם המוצר, שם הקונה או כל דבר אחר כדי לחפש בטבלה">
+</div>
+  <br>
+<table class="table table-striped content-font" id="debt_table">
+    <thead>
+        <tr>
+            <th scope="col" onclick="sortTable(0)" style="cursor:pointer">האם החוב הוחזר?</th>
+            <th scope="col" onclick="sortTable(1)" style="cursor:pointer">כמה?</th>
+            <th scope="col" onclick="sortTable(2)" style="cursor:pointer">על מה?</th>
+            <th scope="col" onclick="sortTable(3)" style="cursor:pointer">למי?</th>
+            <th scope="col" onclick="sortTable(4)" style="cursor:pointer">מי?</th>
+        </tr>
+    </thead>
+    <tbody id="debt_table_body">
+        {% load main_extras %}
+        {% for d in current_person.getPersonDebts %}
+        {% with current_color="color_"|addstr:d.purchase.id %}
+        <tr {% if d.was_paid %} class="strikeout" {%endif%}>
+          <form action="{% url 'save_debts_details' d.id %}" method="POST">
+            {% csrf_token %}
+            <!-- <input onChange="this.form.submit()" -->
+            <!-- <td><button>עדכון</button></td>     -->
+            <!-- <input type="hidden" name="result.id" value={{result.id}}> -->
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <td><input type="checkbox" id="was_paid" name="was_paid"
+              onChange="this.form.submit()" {% if d.was_paid %} checked {%endif%}></td>
+          </form>
+            <td>{{d.price}}</td>
+            <td class="with-eight" style="color:{{ colors|getattribute:current_color }};">{{d.purchase.item_name}}</td>
+            <td>{{d.buyer.name}}</td>
+            <td >{{d.debtor.name}}</td>
+            <!-- <th scope="row">{{ forloop.counter0 }}</th> -->
+        </tr>
+        {% endwith %}
+        {% endfor %}
+    </tbody>
+</table>
+</div>
 {% endblock %}

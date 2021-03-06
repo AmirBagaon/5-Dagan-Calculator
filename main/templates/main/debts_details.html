@@ -5,7 +5,32 @@
 <style>
     .content-rtl * {
         direction: rtl;
+        
     }
+    .content-font * {
+      direction: rtl;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    table {
+    border-collapse: collapse;
+}
+
+td {
+    position: relative;
+    padding: 5px 10px;
+}
+
+tr.strikeout td:before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    border-bottom: 1px solid #111;
+    width: 100%;
+}
+}
+
 
     .with-eight {
     color: white;
@@ -96,12 +121,14 @@
 <br>
 <div class="my_container">
   <div id="outer-circle"></div>
-<div class="content-rtl">
-<h2>פירוט חובות</h2>
+  <div class="content-rtl">
+    <h2>פירוט חובות</h2>
+  </div>
+<div class="content-font">
   <input class="form-control" id="myInput" type="text" dir="rtl" placeholder="כאן ניתן לכתוב את שם המוצר, שם הקונה או כל דבר אחר כדי לחפש בטבלה">
 </div>
   <br>
-<table class="table table-striped content-rtl" id="debt_table">
+<table class="table table-striped content-font" id="debt_table">
     <thead>
         <tr>
             <th scope="col" onclick="sortTable(0)" style="cursor:pointer">האם החוב הוחזר?</th>
@@ -115,8 +142,15 @@
         {% load main_extras %}
         {% for d in debts %}
         {% with current_color="color_"|addstr:d.purchase.id %}
-        <tr>
-            <td>{{d.was_paid}}</td>
+        <tr {% if d.was_paid %} class="strikeout" {%endif%}>
+          <form action="{% url 'debts_details' d.id %}" method="POST">
+            {% csrf_token %}
+            <!-- <input onChange="this.form.submit()" -->
+            <!-- <td><button>עדכון</button></td>     -->
+            <!-- <input type="hidden" name="result.id" value={{result.id}}> -->
+            <td><input type="checkbox" id="was_paid" name="was_paid"
+              onChange="this.form.submit()" {% if d.was_paid %} checked {%endif%}></td>
+          </form>
             <td>{{d.price}}</td>
             <td class="with-eight" style="color:{{ colors|getattribute:current_color }};">{{d.purchase.item_name}}</td>
             <td>{{d.buyer.name}}</td>

@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import *
+from django.http import HttpResponse, HttpResponseRedirect
+
 import datetime
 
 from .forms import *
@@ -27,6 +29,9 @@ persons = Person.objects.all()
 purchases = Purchase.objects.all()
 debts = Debt.objects.all()
 
+zz = persons.get(name="עידית")
+print(zz.getAllOwes())
+
 def getContext():
     context = {}
     persons = Person.objects.all()
@@ -42,8 +47,8 @@ def getContext():
 #     print(person, person.getTotalOwed(), person.getTotalOwes())
 
 
-items = purchases.filter(debtors__name="שרי")
-items = purchases.filter(buyers__name="אפרת")
+# items = purchases.filter(debtors__name="שרי")
+# items = purchases.filter(buyers__name="אפרת")
 # items = purchases.filter(price=20)
 
 # print(items.query)
@@ -56,22 +61,8 @@ items = purchases.filter(buyers__name="אפרת")
 # print("##############")
 
 def home(request):
-
-    if request.method=="POST":
-        print("POSTTTTTTTTTTTTTTTTTTTTTTTTTT")
-        email = request.POST['exampleInputEmail1']
-        pswd = request.POST['pswd'] 
-        print(email)
-        print(pswd)
-        ins = Details(email=email, pswd=pswd)
-        ins.save()
-        ins2 = Details(email="bla@gmail.com", pswd="9999")
-        ins2.save()
-        
-    elif request.method=="GET":
-        print("GETTTTTTTTTTTTTTTTTTTTTTTTTTT")
-
-    return render(request, "main/home.html")
+    context = getContext()
+    return render(request, "main/home.html", context)
 
 def base_page(request):
     return render(request, "main/base.html")
@@ -105,11 +96,9 @@ def person_create_view(request):
     return render(request, "main/person_create.html", context)
 
 def person2_create_view(request):
-    print("h1")
     form = PersonForm(request.POST or None)
     if form.is_valid():
         form.save()
-    print("h2")
     context = {
         'form': form
     } 
@@ -184,27 +173,44 @@ def buy_history(request):
     context = getContext()
     return render(request, "main/buy_history.html", context)
 
-def debts_details(request):
+def debts_details(request, debt_id=None):
+
+    #If save was clicked
+    if request.method=="POST":
+        updated_value = "was_paid" in request.POST 
+        Debt.objects.filter(id = debt_id).update(was_paid=updated_value)
+        
+
     context = getContext()
     colors = {}
 
-    print("######")
-    # for p in purchases:
-    #     my_filter = Debt.objects.filter(purchase=p)
-    #     print(my_filter)
-
     for d in debts:
         colors[f"color_{d.purchase.id}"] = generateRandomColor()
-    
-    # items = purchases.filter(debtors__name="שרי")
-    print("######")
-
     context['colors'] = colors
 
     return render(request, "main/debts_details.html", context)
 
+def save_debts_details(request, debt_id=None):
+     #If save was clicked
+    if request.method=="POST":
+        updated_value = "was_paid" in request.POST 
+        Debt.objects.filter(id = debt_id).update(was_paid=updated_value)
+    next = request.POST.get('next', '/')
+    return HttpResponseRedirect(next)
 def dynamic_lookup_view(request, p_name):
     context = getContext()
     ins = Person.objects.get(name=p_name)
-    context["current"] = ins
-    return render(request, "main/person_details.html", context)
+    context["current_person"] = ins
+    #If save was clicked
+    if request.method=="POST":
+        updated_value = "was_paid" in request.POST 
+        Debt.objects.filter(id = debt_id).update(was_paid=updated_value)
+        
+
+    colors = {}
+
+    for d in debts:
+        colors[f"color_{d.purchase.id}"] = generateRandomColor()
+    context['colors'] = colors
+
+    return render(request, "main/person_details.html", context)    

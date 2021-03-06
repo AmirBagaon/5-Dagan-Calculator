@@ -25,3 +25,10 @@ def getattribute(value, arg):
         return value[int(arg)]
     else:
         return "blablabla"
+
+@register.filter
+def getrandomcolor(value, arg):
+    import random
+    r = lambda: random.randint(0,255)
+    color = ('#%02X%02X%02X' % (r(),r(),r())) #Something from the form: #FFFFFF
+    return color
