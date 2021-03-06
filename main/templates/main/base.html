@@ -15,8 +15,13 @@
 
     <title>{% block title_block %} {% endblock %}</title>
     <style>
+        @media screen and (max-width: 992px) {
+  body {
+    background-color: blue;
+  }
+}
         body {
-            margin: 20px auto;
+            margin: 2% auto;
             /* font-family: 'Lato'; */
             background-image: url("{% static 'main/shaam.jpeg' %}");
             height: 100%;
