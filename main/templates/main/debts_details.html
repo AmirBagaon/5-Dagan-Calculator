@@ -151,7 +151,8 @@ tr.strikeout td:before {
               onChange="this.form.submit()" {% if d.was_paid %} checked {%endif%}></td>
           </form>
             <td>{{d.price}}</td>
-            <td class="with-eight" style="color:{{ colors|getattribute:current_color }};">{{d.purchase.item_name}}</td>
+            <!-- <td class="with-eight" style="color:{{ colors|getattribute:current_color }};">{{d.purchase.item_name}}</td> -->
+            <td>{{d.purchase.item_name}}</td>
             <td>{{d.buyer.name}}</td>
             <td >{{d.debtor.name}}</td>
             <!-- <th scope="row">{{ forloop.counter0 }}</th> -->

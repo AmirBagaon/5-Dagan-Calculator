@@ -140,7 +140,7 @@
             <span class="w-100 d-lg-none d-block">
                 <!-- hidden spacer to center brand on mobile -->
             </span>
-            <!-- home page icon -->
+            <!-- home page icon
             <a class="navbar-brand d-none d-lg-inline-block navbar-dark" style="color: rgb(3, 3, 3);" href="{% url 'home' %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house"
                     viewBox="0 0 16 20">
@@ -158,12 +158,14 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-            </div>
+            </div> -->
         </div>
         <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
             <ul class="navbar-nav ml-auto flex-nowrap nav-ul">
                 <li class="nav-li">
-                    <a href="#" class="nav-link m-2 menu-item nav-active">Our Solution</a>
+                    <a href="{% url 'home' %}">
+                        <br> <h3><center>דף הבית</center></h3>
+                    </a>
                 </li>
 
                 <li class="nav-li">
