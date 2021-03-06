@@ -123,6 +123,9 @@
     margin-right: auto;
     /* width: 50%; */
   }
+  .navbar.transparent.navbar-inverse .navbar-inner {
+   background: rgba(0,0,0,0.4);
+}
     </style>
         {% block css_block %}
 
@@ -132,13 +135,13 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <nav class="navbar navbar-expand-lg ">
         <div class="d-flex flex-grow-1">
             <span class="w-100 d-lg-none d-block">
                 <!-- hidden spacer to center brand on mobile -->
             </span>
             <!-- home page icon -->
-            <a class="navbar-brand d-none d-lg-inline-block navbar-dark" style="color: #fff;" href="{% url 'home' %}">
+            <a class="navbar-brand d-none d-lg-inline-block navbar-dark" style="color: rgb(3, 3, 3);" href="{% url 'home' %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house"
                     viewBox="0 0 16 20">
                     <path fill-rule="evenodd"
@@ -170,7 +173,7 @@
                 </li>
                 <li class="nav-li">
                     <a href={% url 'buy_history' %}>
-                        <br>  <h3><center>הסטוריית<br>  קניות</center></h3>
+                        <br>  <h3><center>היסטוריית<br>  קניות</center></h3>
                     </a>
                 </li>
                 <li class="nav-li">
