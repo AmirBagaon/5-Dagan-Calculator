@@ -15,11 +15,7 @@
 
     <title>{% block title_block %} {% endblock %}</title>
     <style>
-        @media screen and (max-width: 992px) {
-  body {
-    background-color: blue;
-  }
-}
+
         body {
             margin: 2% auto;
             /* font-family: 'Lato'; */
@@ -65,8 +61,8 @@
             color: #000;
             background: #ffc;
             display: block;
-            height: 10em;
-            width: 10em;
+            height: 10rem;
+            width: 10rem;
             padding: 1em;
             box-shadow: 5px 5px 7px rgba(33, 33, 33, .7);
             transform: rotate(-6deg);
@@ -140,11 +136,11 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg ">
+    <nav class="navbar navbar-expand-sm ">
         <div class="d-flex flex-grow-1">
-            <span class="w-100 d-lg-none d-block">
+            <!-- <span class="w-100 d-lg-none d-block"> -->
                 <!-- hidden spacer to center brand on mobile -->
-            </span>
+            <!-- </span> -->
             <!-- home page icon
             <a class="navbar-brand d-none d-lg-inline-block navbar-dark" style="color: rgb(3, 3, 3);" href="{% url 'home' %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house"
